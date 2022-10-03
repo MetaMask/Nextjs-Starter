@@ -43,13 +43,13 @@ function MetamaskProvider({ children }: PropsWithChildren) {
     <MetamaskContext.Provider value={value}>
       {children}
     </MetamaskContext.Provider>
-  );  
+  );
 }
 
 function useMetamask() {
   const context = React.useContext(MetamaskContext);
   if (context === undefined) {
-    throw new Error("useCount must be used within a MetamaskProvider");
+    throw new Error("useMetamask must be used within a MetamaskProvider");
   }
   return context;
 }
