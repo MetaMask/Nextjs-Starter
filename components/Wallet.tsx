@@ -6,12 +6,13 @@ import { Loading } from "./Loading";
 export default function Wallet() {
   const {
     dispatch,
-    state: { status, isMetamaskInstalled },
+    state: { status, isMetamaskInstalled, wallet, balance },
   } = useMetamask();
 
   const showInstallMetamask =
     status !== "pageNotLoaded" && !isMetamaskInstalled;
-  const showConnectButton = status !== "pageNotLoaded" && isMetamaskInstalled;
+  const showConnectButton =
+    status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
 
   const handleConnect = async () => {
     dispatch({ type: "loading" });
@@ -20,7 +21,12 @@ export default function Wallet() {
     });
 
     if (accounts.length > 0) {
-      dispatch({ type: "connect", wallet: accounts[0] });
+      const balance = await window.ethereum!.request({
+        method: "eth_getBalance",
+        params: [accounts[0], "latest"],
+      });
+
+      dispatch({ type: "connect", wallet: accounts[0], balance });
     }
   };
 
@@ -40,6 +46,26 @@ export default function Wallet() {
           </Link>{" "}
           in order to learn how to use the Metamask API.
         </p>
+
+        {wallet && (
+          <div className=" px-4 py-5 sm:px-6">
+            <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+              <div className="ml-4 mt-4">
+                <div className="flex items-center">
+                  <div className="ml-4">
+                    <h3 className="text-lg font-medium leading-6 text-white">
+                      Address: <span>{wallet}</span>
+                    </h3>
+                    <p className="text-sm text-white">
+                      Balance: <span>{balance}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {showConnectButton && (
           <button
             onClick={handleConnect}
