@@ -1,6 +1,6 @@
 import React, { useEffect, type PropsWithChildren } from "react";
 
-type ConnectAction = { type: "connect"; wallet: string };
+type ConnectAction = { type: "connect"; wallet: string; balance: string };
 type DisconnectAction = { type: "disconnect" };
 type PageLoadedAction = { type: "pageLoaded"; isMetamaskInstalled: boolean };
 type LoadingAction = { type: "loading" };
@@ -19,23 +19,21 @@ type State = {
   wallet: string | null;
   isMetamaskInstalled: boolean;
   status: Status;
+  balance: string | null;
 };
-
-const MetamaskContext = React.createContext<
-  { state: State; dispatch: Dispatch } | undefined
->(undefined);
 
 const initialState: State = {
   wallet: null,
   isMetamaskInstalled: false,
   status: "loading",
+  balance: null,
 } as const;
 
 function metamaskReducer(state: State, action: Action): State {
   switch (action.type) {
     case "connect": {
-      const { wallet } = action;
-      return { ...state, wallet, status: "idle" };
+      const { wallet, balance } = action;
+      return { ...state, wallet, balance, status: "idle" };
     }
     case "disconnect": {
       return { ...state, wallet: null };
@@ -52,6 +50,10 @@ function metamaskReducer(state: State, action: Action): State {
     }
   }
 }
+
+const MetamaskContext = React.createContext<
+  { state: State; dispatch: Dispatch } | undefined
+>(undefined);
 
 function MetamaskProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = React.useReducer(metamaskReducer, initialState);
