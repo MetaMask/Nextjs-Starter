@@ -6,6 +6,8 @@ Branches will be created with stages for the rest of the implementation
 
 ## Instructions:
 
+You are presented with a Next.js application that has a basic layout and a Context Provider. Your goal is to learn how to use the Metamask API to make this an application that users can interact with.
+
 ### 1 Basics: connecting the user
 
 - Verify if the user has Metamask installed or not. If not, link to the Metamask website.
