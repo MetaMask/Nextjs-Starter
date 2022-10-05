@@ -2,7 +2,12 @@ import React, { useEffect, type PropsWithChildren } from "react";
 
 type ConnectAction = { type: "connect"; wallet: string; balance: string };
 type DisconnectAction = { type: "disconnect" };
-type PageLoadedAction = { type: "pageLoaded"; isMetamaskInstalled: boolean };
+type PageLoadedAction = {
+  type: "pageLoaded";
+  isMetamaskInstalled: boolean;
+  wallet: string | null;
+  balance: string | null;
+};
 type LoadingAction = { type: "loading" };
 type IdleAction = { type: "idle" };
 
@@ -35,14 +40,19 @@ function metamaskReducer(state: State, action: Action): State {
   switch (action.type) {
     case "connect": {
       const { wallet, balance } = action;
-      return { ...state, wallet, balance, status: "idle" };
+      const newState = { ...state, wallet, balance, status: "idle" } as State;
+      const info = JSON.stringify(newState);
+      window.localStorage.setItem("metamaskState", info);
+
+      return newState;
     }
     case "disconnect": {
+      window.localStorage.removeItem("metamaskState");
       return { ...state, wallet: null, balance: null };
     }
     case "pageLoaded": {
-      const { isMetamaskInstalled } = action;
-      return { ...state, isMetamaskInstalled, status: "idle" };
+      const { isMetamaskInstalled, balance, wallet } = action;
+      return { ...state, isMetamaskInstalled, status: "idle", wallet, balance };
     }
     case "loading": {
       return { ...state, status: "loading" };
@@ -50,6 +60,7 @@ function metamaskReducer(state: State, action: Action): State {
     case "idle": {
       return { ...state, status: "idle" };
     }
+
     default: {
       throw new Error("Unhandled action type");
     }
@@ -63,19 +74,6 @@ const MetamaskContext = React.createContext<
 function MetamaskProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = React.useReducer(metamaskReducer, initialState);
   const value = { state, dispatch };
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      // start by checking if window.ethereum is present, indicating a wallet extension
-      const ethereumProviderInjected = typeof window.ethereum !== "undefined";
-      // this could be other wallets so we can verify if we are dealing with metamask
-      // using the boolean constructor to be explecit and not let this be used as a falsy value (optional)
-      const isMetamaskInstalled =
-        ethereumProviderInjected && Boolean(window.ethereum.isMetaMask);
-
-      dispatch({ type: "pageLoaded", isMetamaskInstalled });
-    }
-  }, []);
 
   return (
     <MetamaskContext.Provider value={value}>

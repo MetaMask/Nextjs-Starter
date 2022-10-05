@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useListen } from "../hooks/useListen";
 import { useMetamask } from "../hooks/useMetamask";
 import { Loading } from "./Loading";
 
@@ -7,13 +8,14 @@ export default function Wallet() {
     dispatch,
     state: { status, isMetamaskInstalled, wallet, balance },
   } = useMetamask();
+  const listen = useListen();
 
   const showInstallMetamask =
     status !== "pageNotLoaded" && !isMetamaskInstalled;
   const showConnectButton =
     status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
 
-  const showAddToken = status !== "pageNotLoaded" && typeof wallet === "string";
+  const isConnected = status !== "pageNotLoaded" && typeof wallet === "string";
 
   const handleConnect = async () => {
     dispatch({ type: "loading" });
@@ -29,25 +31,12 @@ export default function Wallet() {
       dispatch({ type: "connect", wallet: accounts[0], balance });
 
       // we can register an event listener for changes to the users wallet
-      window.ethereum.on("accountsChanged", async (newAccounts: string[]) => {
-        if (newAccounts.length > 0) {
-          // uppon receiving a new wallet, we'll request again the balance to synchronize the UI.
-          const newBalance = await window.ethereum!.request({
-            method: "eth_getBalance",
-            params: [newAccounts[0], "latest"],
-          });
-
-          dispatch({
-            type: "connect",
-            wallet: newAccounts[0],
-            balance: newBalance,
-          });
-        } else {
-          // if the length is 0, then the user has disconnected from the wallet UI
-          dispatch({ type: "disconnect" });
-        }
-      });
+      listen();
     }
+  };
+
+  const handleDisconnect = () => {
+    dispatch({ type: "disconnect" });
   };
 
   const handleAddUsdc = async () => {
@@ -125,13 +114,21 @@ export default function Wallet() {
           </Link>
         )}
 
-        {showAddToken && (
-          <button
-            onClick={handleAddUsdc}
-            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
-          >
-            {status === "loading" ? <Loading /> : "Add Token"}
-          </button>
+        {isConnected && (
+          <div className="flex  w-full justify-center space-x-2">
+            <button
+              onClick={handleAddUsdc}
+              className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+            >
+              {status === "loading" ? <Loading /> : "Add Token"}
+            </button>
+            <button
+              onClick={handleDisconnect}
+              className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+            >
+              Disconnect
+            </button>
+          </div>
         )}
       </div>
     </div>
