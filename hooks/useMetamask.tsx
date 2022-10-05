@@ -3,11 +3,13 @@ import React, {
   useSyncExternalStore,
   type PropsWithChildren,
 } from "react";
+
 type ConnectAction = { type: "connect"; wallet: string };
 type DisconnectAction = { type: "disconnect" };
 
 type Action = ConnectAction | DisconnectAction;
 type Dispatch = (action: Action) => void;
+
 type State = { wallet: string | null };
 
 const MetamaskContext = React.createContext<
