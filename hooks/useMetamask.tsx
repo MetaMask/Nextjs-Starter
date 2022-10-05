@@ -1,29 +1,51 @@
-import React, {
-  useEffect,
-  useSyncExternalStore,
-  type PropsWithChildren,
-} from "react";
+import React, { useEffect, type PropsWithChildren } from "react";
 
 type ConnectAction = { type: "connect"; wallet: string };
 type DisconnectAction = { type: "disconnect" };
+type PageLoadedAction = { type: "pageLoaded"; isMetamaskInstalled: boolean };
+type LoadingAction = { type: "loading" };
 
-type Action = ConnectAction | DisconnectAction;
+type Action =
+  | ConnectAction
+  | DisconnectAction
+  | PageLoadedAction
+  | LoadingAction;
+
 type Dispatch = (action: Action) => void;
 
-type State = { wallet: string | null };
+type Status = "loading" | "idle" | "pageNotLoaded";
+
+type State = {
+  wallet: string | null;
+  isMetamaskInstalled: boolean;
+  status: Status;
+};
 
 const MetamaskContext = React.createContext<
   { state: State; dispatch: Dispatch } | undefined
 >(undefined);
 
-function metamaskReducer(state: State, action: Action) {
+const initialState: State = {
+  wallet: null,
+  isMetamaskInstalled: false,
+  status: "loading",
+} as const;
+
+function metamaskReducer(state: State, action: Action): State {
   switch (action.type) {
     case "connect": {
       const { wallet } = action;
-      return { ...state, wallet };
+      return { ...state, wallet, status: "idle" };
     }
     case "disconnect": {
       return { ...state, wallet: null };
+    }
+    case "pageLoaded": {
+      const { isMetamaskInstalled } = action;
+      return { ...state, isMetamaskInstalled, status: "idle" };
+    }
+    case "loading": {
+      return { ...state, status: "loading" };
     }
     default: {
       throw new Error("Unhandled action type");
@@ -32,12 +54,19 @@ function metamaskReducer(state: State, action: Action) {
 }
 
 function MetamaskProvider({ children }: PropsWithChildren) {
-  const [state, dispatch] = React.useReducer(metamaskReducer, { wallet: "" });
+  const [state, dispatch] = React.useReducer(metamaskReducer, initialState);
   const value = { state, dispatch };
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      console.log("hello");
+      // start by checking if window.ethereum is present, indicating a wallet extension
+      const ethereumProviderInjected = typeof window.ethereum !== "undefined";
+      // this could be other wallets so we can verify if we are dealing with metamask
+      // using the boolean constructor to be explecit and not let this be used as a falsy value (optional)
+      const isMetamaskInstalled =
+        ethereumProviderInjected && Boolean(window.ethereum.isMetaMask);
+
+      dispatch({ type: "pageLoaded", isMetamaskInstalled });
     }
   }, []);
 
