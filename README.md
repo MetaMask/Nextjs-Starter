@@ -37,3 +37,7 @@ This is the time to get familiar with how to work with a Next.js application and
 
 - Persist the wallet address and balance in the local storage.
 - Add a button to disconnect the wallet.
+
+### 5. Cleaning Up:
+
+- removing event listeners if people disconnect
