@@ -8,7 +8,7 @@ Branches will be created with stages for the rest of the implementation
 
 You are presented with a Next.js application that has a basic layout and a Context Provider. Your goal is to learn how to use the Metamask API to make this an application that users can interact with.
 
-Few notes about the initial setup ans constraints:
+Few notes about the initial setup and constraints:
 
 - You do not need any additional dependencies.
 - The context provider is already setup so that any react code under [components](./components/) and [pages](./pages/) can access the context using a hook.
