@@ -176,7 +176,8 @@ export default function Wallet() {
     state: { status, isMetamaskInstalled },
   } = useMetamask();
 
-  const showInstallMetamask = status !== "pageNotLoaded" && !isMetamaskInstalled;
+  const showInstallMetamask =
+    status !== "pageNotLoaded" && !isMetamaskInstalled;
   const showConnectButton = status !== "pageNotLoaded" && isMetamaskInstalled;
 
   const handleConnect = async () => {
@@ -216,10 +217,12 @@ export default function Wallet() {
         )}
 
         {showInstallMetamask && (
-          <Link href="https://metamask.io/" target="_blank">
-            <a className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto">
-              Connect Wallet
-            </a>
+          <Link
+            href="https://metamask.io/"
+            target="_blank"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+          >
+            Connect Wallet
           </Link>
         )}
       </div>
@@ -238,9 +241,9 @@ Run the project and attempt to connect to your MetaMask wallet.
 npm run dev
 ```
 
-Two things are happening now: 
+Two things are happening now:
 
-1. If a user does not have MetaMask installed they will get a "Connect Wallet" button that simply takes you to download MetaMask. 
+1. If a user does not have MetaMask installed they will get a "Connect Wallet" button that simply takes you to download MetaMask.
 2. If MetaMask is installed they will see a "Connect Wallet" button that actually connects their wallet to the dapp.
 
 > We are not yet hiding the button once connected or displaying any wallet information. As well, you will notice in MetaMask that you are connected to the dapp. To test the Install link you can go into your extension manager and disable MetaMask temporarily.
@@ -362,8 +365,10 @@ export default function Wallet() {
     state: { status, isMetamaskInstalled, wallet, balance },
   } = useMetamask();
 
-  const showInstallMetamask = status !== "pageNotLoaded" && !isMetamaskInstalled;
-  const showConnectButton = status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
+  const showInstallMetamask =
+    status !== "pageNotLoaded" && !isMetamaskInstalled;
+  const showConnectButton =
+    status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
 
   const handleConnect = async () => {
     dispatch({ type: "loading" });
@@ -427,10 +432,12 @@ export default function Wallet() {
         )}
 
         {showInstallMetamask && (
-          <Link href="https://metamask.io/" target="_blank">
-            <a className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto">
-              Connect Wallet
-            </a>
+          <Link
+            href="https://metamask.io/"
+            target="_blank"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+          >
+            Connect Wallet
           </Link>
         )}
       </div>
@@ -449,7 +456,7 @@ This is a great start, but our UI is still lacking and there is more logic we ne
 
 ### Two Way Communication with MetaMask
 
-Again we will be updating the `hooks/useMetamask.tsx` and `components/Wallet.tsx` files. The idea will be to add a few more reducer actions including **Loading** and **Idle** states for the page, we will fix our button to say **"Install MetaMask"** instead of **"Connect MetaMask"** and we will parse the **balance** to display a readable number. 
+Again we will be updating the `hooks/useMetamask.tsx` and `components/Wallet.tsx` files. The idea will be to add a few more reducer actions including **Loading** and **Idle** states for the page, we will fix our button to say **"Install MetaMask"** instead of **"Connect MetaMask"** and we will parse the **balance** to display a readable number.
 
 Finally, we will add some code that uses the `wallet_watchAsset` MetaMask (RPC API) method to add **$USDC** token to our MetaMask wallet. This will enable our users to see those tokens in their wallet if they have them. If a dApp uses a particular token, we can programmatically do this for them rather than expecting to do it themselves manually through the MetMask UI.
 
@@ -566,8 +573,10 @@ export default function Wallet() {
     state: { status, isMetamaskInstalled, wallet, balance },
   } = useMetamask();
 
-  const showInstallMetamask = status !== "pageNotLoaded" && !isMetamaskInstalled;
-  const showConnectButton = status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
+  const showInstallMetamask =
+    status !== "pageNotLoaded" && !isMetamaskInstalled;
+  const showConnectButton =
+    status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
 
   const showAddToken = status !== "pageNotLoaded" && typeof wallet === "string";
 
@@ -654,7 +663,8 @@ export default function Wallet() {
                     <p className="text-sm text-white">
                       Balance:{" "}
                       <span>
-                        {(parseInt(balance) / 1000000000000000000).toFixed(4)}{" "} ETH
+                        {(parseInt(balance) / 1000000000000000000).toFixed(4)}{" "}
+                        ETH
                       </span>
                     </p>
                   </div>
@@ -674,10 +684,12 @@ export default function Wallet() {
         )}
 
         {showInstallMetamask && (
-          <Link href="https://metamask.io/" target="_blank">
-            <a className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto">
-              Install Metamask
-            </a>
+          <Link
+            href="https://metamask.io/"
+            target="_blank"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+          >
+            Install Metamask
           </Link>
         )}
 
@@ -703,8 +715,7 @@ We have one more UX improvement to push our dapp.
 
 ### More UX Goodies
 
-We'd like to store some MetaMask state in the browser's local storage to help us create a Disconnect button, something that we feel makes the UX better in a dapp. We will register an event listener for changes to the users wallet, so that when connecting and disconnecting the UX is just a little bit better. We will add a custom React Hook called `useListen` to help us achieve this and to co-locate some code that would otherwise be added in two different components so that our final code is a bit cleaner. We do a small refactor to get rid of a `useEffect` and we will display our buttons side by side when we have more than one showing on the page (Disconnect & Add Tokens) and we will use Tailwind's flex-box options to make this easy. 
-
+We'd like to store some MetaMask state in the browser's local storage to help us create a Disconnect button, something that we feel makes the UX better in a dapp. We will register an event listener for changes to the users wallet, so that when connecting and disconnecting the UX is just a little bit better. We will add a custom React Hook called `useListen` to help us achieve this and to co-locate some code that would otherwise be added in two different components so that our final code is a bit cleaner. We do a small refactor to get rid of a `useEffect` and we will display our buttons side by side when we have more than one showing on the page (Disconnect & Add Tokens) and we will use Tailwind's flex-box options to make this easy.
 
 Update `hooks/useMetamask.tsx`
 
@@ -849,8 +860,10 @@ export default function Wallet() {
   } = useMetamask();
   const listen = useListen();
 
-  const showInstallMetamask = status !== "pageNotLoaded" && !isMetamaskInstalled;
-  const showConnectButton = status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
+  const showInstallMetamask =
+    status !== "pageNotLoaded" && !isMetamaskInstalled;
+  const showConnectButton =
+    status !== "pageNotLoaded" && isMetamaskInstalled && !wallet;
 
   const isConnected = status !== "pageNotLoaded" && typeof wallet === "string";
 
@@ -895,7 +908,6 @@ export default function Wallet() {
     dispatch({ type: "idle" });
   };
 
-
   return (
     <div className="bg-truffle">
       <div className="mx-auto max-w-2xl py-16 px-4 text-center sm:py-20 sm:px-6 lg:px-8">
@@ -925,7 +937,8 @@ export default function Wallet() {
                     <p className="text-sm text-white">
                       Balance:{" "}
                       <span>
-                        {(parseInt(balance) / 1000000000000000000).toFixed(4)}{" "} ETH
+                        {(parseInt(balance) / 1000000000000000000).toFixed(4)}{" "}
+                        ETH
                       </span>
                     </p>
                   </div>
@@ -945,10 +958,12 @@ export default function Wallet() {
         )}
 
         {showInstallMetamask && (
-          <Link href="https://metamask.io/" target="_blank">
-            <a className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto">
-              Install Metamask
-            </a>
+          <Link
+            href="https://metamask.io/"
+            target="_blank"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+          >
+            Install Metamask
           </Link>
         )}
 
@@ -968,7 +983,6 @@ export default function Wallet() {
             </button>
           </div>
         )}
-
       </div>
     </div>
   );
@@ -1040,7 +1054,7 @@ This also required a slight update to our JSX/HTML to display our buttons more n
 
 We have one final change we want to make to ensure that we stop listening to changes once the user has disconnected their wallet.
 
-We will update the `` and `` files. This will make TypeScript definitions file aware of the `removeAllListeners()` method we will be using as well add necessary code to the `disconnect` case inside the `metamaskReducer`.
+We will update the `and` files. This will make TypeScript definitions file aware of the `removeAllListeners()` method we will be using as well add necessary code to the `disconnect` case inside the `metamaskReducer`.
 
 Update `types.d.ts` file:
 

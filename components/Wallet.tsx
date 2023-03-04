@@ -107,10 +107,12 @@ export default function Wallet() {
         )}
 
         {showInstallMetamask && (
-          <Link href="https://metamask.io/" target="_blank">
-            <a className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto">
-              Install Metamask
-            </a>
+          <Link
+            href="https://metamask.io/"
+            target="_blank"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+          >
+            Install Metamask
           </Link>
         )}
 
