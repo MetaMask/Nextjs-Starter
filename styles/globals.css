@@ -28,3 +28,9 @@ a {
     background: black;
   }
 }
+
+.hero-image{
+background-image: url('../public/hero-20210901.webp');
+background-position-y: center;
+background-repeat: no-repeat;
+}
