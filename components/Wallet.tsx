@@ -167,10 +167,9 @@ export default function Wallet() {
         </div>
       </nav>
 
-      <header>
+      <header className="relative">
         <div
-          className="bg-cover bg-center h-screen flex items-center justify-center
-          md:h-96 absolute -z-1 w-full object-cover"
+          className="bg-cover bg-center h-96 flex items-center justify-center relative -z-1 w-full object-cover"
           style={{
             backgroundImage: `url('https://tixel.com/cdn-cgi/image/width=1792,format=auto/images/home/hero-20210901.jpg?size=1792')`,
             backgroundSize: "cover",
@@ -190,12 +189,27 @@ export default function Wallet() {
                     The honest ticket marketplace.
                   </h3>
                 </div>
-               
               </div>
             </div>
           </div>
         </div>
       </header>
+
+      <section className="pb-6 md:pt-12 md:pb-12 pt-6 max-w-5xl mx-auto relative z-10">
+        <div className="flex items-baseline space-x-4">
+          <h2 className="text-lg md:text-xl lg:text-2xl font-bold flex items-center">
+            What&#39;s on in Sydney
+          </h2>
+          <p>
+            <a
+              href="/au/Sydney/discover/all"
+              className="hover:text-black text-orange-500 space-x-1"
+            >
+              <strong className="font-semibold">View all</strong>
+            </a>
+          </p>
+        </div>
+      </section>
 
       {wallet && balance && (
         <div className=" px-4 py-5 sm:px-6">
