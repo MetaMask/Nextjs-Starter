@@ -101,7 +101,7 @@ export default function Wallet() {
           {showConnectButton && (
             <button
               onClick={handleConnect}
-              className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+              className="px-3.5 py-2 rounded-md inline-block bg-orange-500 hover:bg-orange-600 focus:ring focus:ring-orange-300 text-white border border-orange-500 align-middle font-semibold transition-colors leading-tight focus:outline-none space-x-2 relative"
             >
               {status === "loading" ? <Loading /> : "Connect Wallet"}
             </button>
@@ -111,7 +111,7 @@ export default function Wallet() {
             <Link
               href="https://metamask.io/"
               target="_blank"
-              className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+              className="px-3.5 py-2 rounded-md inline-block bg-orange-500 hover:bg-orange-600 focus:ring focus:ring-orange-300 text-white border border-orange-500 align-middle font-semibold transition-colors leading-tight focus:outline-none space-x-2 relative"
             >
               Install Metamask
             </Link>
@@ -121,13 +121,13 @@ export default function Wallet() {
             <div className="flex  w-full justify-center space-x-2">
               <button
                 onClick={handleAddUsdc}
-                className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+                className="px-3.5 py-2 rounded-md inline-block bg-orange-500 hover:bg-orange-600 focus:ring focus:ring-orange-300 text-white border border-orange-500 align-middle font-semibold transition-colors leading-tight focus:outline-none space-x-2 relative"
               >
                 {status === "loading" ? <Loading /> : "Add Token"}
               </button>
               <button
                 onClick={handleDisconnect}
-                className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-ganache text-white px-5 py-3 text-base font-medium  sm:w-auto"
+                className="px-3.5 py-2 rounded-md inline-block bg-orange-500 hover:bg-orange-600 focus:ring focus:ring-orange-300 text-white border border-orange-500 align-middle font-semibold transition-colors leading-tight focus:outline-none space-x-2 relative"
               >
                 Disconnect
               </button>
