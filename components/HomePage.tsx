@@ -55,7 +55,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <nav className="w-full bg-slate-500 shadow">
+      <nav className="w-full bg-transparent shadow absolute z-10 ">
         <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -105,12 +105,12 @@ export default function HomePage() {
           </div>
           <div>
             <div
-              className={`flex-1  justify-self-end pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+              className={`flex-1  justify-self-end pb-3 md:block md:pb-0 md:mt-0 ${
                 navbar ? "block" : "hidden"
               }`}
             >
-              <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                {/* <li className="text-white hover:text-indigo-200">
+              <ul className="items-center justify-center space-y-6 md:space-x-6 md:space-y-0 md:hidden bg-slate-500 bg-opacity-90 p-2 rounded-md">
+                <li className="text-white hover:text-indigo-200">
                   <Link href="#!">Home</Link>
                 </li>
                 <li className="text-white hover:text-indigo-200">
@@ -121,12 +121,13 @@ export default function HomePage() {
                 </li>
                 <li className="text-white hover:text-indigo-200">
                   <Link href="#!">Contact US</Link>
-                </li> */}
+                </li>
                 <li className="text-white hover:text-indigo-200">
                   <div className="rounded-md inline-block md:hidden">
                     <Wallet />
                   </div>
                 </li>
+                <div className="inline-flex space-x-2">
                 <li className="text-white hover:text-indigo-200">
                   <Link
                     href="#!"
@@ -143,10 +144,21 @@ export default function HomePage() {
                     Sell your ticket
                   </Link>
                 </li>
+                </div>
               </ul>
             </div>
           </div>
-          <div className="hidden space-x-2 md:inline-block">
+          <div className="hidden space-x-2 md:inline-flex justify-center items-center">
+            <div className="inline-flex space-x-8">
+            <Link href="#!" className="text-white hover:text-indigo-200">Home</Link>
+            <Link href="#!" className="text-white hover:text-indigo-200">Blog</Link>
+            <Link href="#!" className="text-white hover:text-indigo-200">About US</Link>
+            <Link href="#!" className="text-white hover:text-indigo-200">Contact US</Link>
+            </div>
+          </div>
+          <div className="hidden space-x-2 md:inline-flex justify-center items-center">
+            <div className="inline-flex space-x-2">
+
             <div className="rounded-md inline-block">
               <Wallet />
             </div>
@@ -162,6 +174,7 @@ export default function HomePage() {
             >
               Sell your ticket
             </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -175,7 +188,10 @@ export default function HomePage() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="w-full h-full bg-transparent-black-600">
+          <div
+            className="w-full h-full"
+            style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+          >
             <div className="mx-auto px-4 flex items-center h-full">
               <div className="w-full text-black">
                 <div className="text-center">
@@ -184,9 +200,15 @@ export default function HomePage() {
                       Buy Safe. Sell Easy.
                     </span>
                   </h1>
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold">
+                  <h3 className="text-white text-lg md:text-xl lg:text-2xl font-bold">
                     The honest ticket marketplace.
                   </h3>
+                  <div className="my-6">
+                    <input
+                      placeholder="Search Anything"
+                      className="px-3.5 py-2 rounded-full inline-flex w-96 align-middle font-semibold transition-colors leading-tight focus:outline-none space-x-2 relative"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -211,12 +233,12 @@ export default function HomePage() {
             </a>
           </p>
         </div>
-        <div className="grid gap-2 lg:grid-cols-4 py-4">
+        <div className="grid gap-3 lg:grid-cols-4 py-4">
           {CARD_DETAILS.map((items, key) => (
             <div className="w-full rounded-lg shadow-md lg:max-w-sm" key={key}>
               <div className="overflow-hidden rounded-t-lg">
                 <img
-                  className="m-auto h-auto w-full transform transition-transform group-hover:scale-110"
+                  className="m-auto h-auto w-full transform transition-transform group-hover:scale-110 hover:scale-110"
                   src={items.img}
                   alt="image"
                 />
@@ -281,12 +303,12 @@ export default function HomePage() {
             What&#39;s Hot
           </h2>
         </div>
-        <div className="grid gap-2 lg:grid-cols-4 py-4">
+        <div className="grid gap-3 lg:grid-cols-4 py-4">
           {HOT_CARD_DETAILS.map((items, key) => (
             <div className="w-full rounded-lg shadow-md lg:max-w-sm" key={key}>
               <div className="overflow-hidden rounded-t-lg">
                 <img
-                  className="m-auto h-auto w-full transform transition-transform group-hover:scale-110"
+                  className="m-auto h-auto w-full transform transition-transform group-hover:scale-110 hover:scale-110"
                   src={items.img}
                   alt="image"
                 />
