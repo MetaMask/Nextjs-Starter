@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
+import HomePage from "../components/HomePage";
 import Wallet from "../components/Wallet";
 import { useListen } from "../hooks/useListen";
 import { useMetamask } from "../hooks/useMetamask";
@@ -32,11 +33,11 @@ const Home: NextPage = () => {
 
       dispatch({ type: "pageLoaded", isMetamaskInstalled, wallet, balance });
     }
-  }, [dispatch, listen]);
+  }, []);
 
   return (
     <>
-      <Wallet />
+      <HomePage />
     </>
   );
 };
