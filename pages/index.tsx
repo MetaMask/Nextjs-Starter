@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
       dispatch({ type: "pageLoaded", isMetamaskInstalled, wallet, balance });
     }
-  }, []);
+  }, [dispatch, listen]);
 
   return (
     <>

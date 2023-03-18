@@ -3,7 +3,6 @@ import { useListen } from "../hooks/useListen";
 import { useMetamask } from "../hooks/useMetamask";
 import { Loading } from "./Loading";
 import { useState } from "react";
-
 export default function Wallet() {
   const {
     dispatch,
@@ -42,10 +41,9 @@ export default function Wallet() {
   };
   const [searchText, setSearchText] = useState("");
 
-  const handleInputChange = (event:any) => {
+  const handleInputChange = (event: any) => {
     setSearchText(event.target.value);
   };
-
 
   const handleAddUsdc = async () => {
     dispatch({ type: "loading" });
@@ -169,112 +167,36 @@ export default function Wallet() {
         </div>
       </nav>
 
-      <section id="hero" className="flex-none h-80 md:h-96 relative">
-        <div className="w-full h-full bg-transparent-black-600">
-          <div className="mx-auto px-4 flex items-center h-full">
-            <div className="w-full text-white">
-              <div className="space-y-lg">
-                <div className="hero-image">
-                  <div className="text-center">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-pink-500">
-                        Buy Safe. Sell Easy.
-                      </span>
-                    </h1>
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold">
-                      The honest ticket marketplace.
-                    </h3>
-                  </div>
-                  <div className="relative mx-auto w-full text-black md:w-2/3 lg:w-3/5">
-                    <div className="hidden lg:block">
-                      <div data-e2e="components/search">
-                        <div className="relative flex items-center">
-                          <div className="overflow-hidden transition-width w-0">
-                            <div className="w-6">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M15 19l-7-7 7-7"
-                                ></path>
-                              </svg>
-                            </div>
-                          </div>
-                          <div className="flex-1">
-                            <div className="w-full relative">
-                              <div className="absolute left-0 top-1/2 -mt-2.5 ml-3 w-5">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                  ></path>
-                                </svg>
-                              </div>
-                              <input
-                                type="search"
-                                placeholder="Any event, anywhere"
-                                data-e2e="components/search:input"
-                                className="pl-9 lg:rounded-lg w-full focus:border-pink-500 focus:ring-pink-500 border-gray-300 rounded-full px-4 border-none placeholder-black font-semibold bg-gray-100"
-                                value={searchText}
-                                onChange={handleInputChange}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="lg:hidden">
-                      <div className="w-full relative">
-                        <div className="absolute left-0 top-1/2 -mt-2.5 ml-3 w-5">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Any event, anywhere"
-                          data-e2e="directory/city:input"
-                          readOnly
-                          onClick={() =>
-                            // window.Tixel.store.dispatch("mainMenu/openSearch")
-                            console.log("hello")
-                          }
-                          className="pl-9 lg:rounded-lg w-full focus:border-pink-500 focus:ring-pink-500 bg-white-50 rounded-full border-gray-200 px-4 font-semibold"
-                          value={searchText}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
+      <header>
+        <div
+          className="bg-cover bg-center h-screen flex items-center justify-center
+          md:h-96 absolute -z-1 w-full object-cover"
+          style={{
+            backgroundImage: `url('https://tixel.com/cdn-cgi/image/width=1792,format=auto/images/home/hero-20210901.jpg?size=1792')`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div className="w-full h-full bg-transparent-black-600">
+            <div className="mx-auto px-4 flex items-center h-full">
+              <div className="w-full text-black">
+                <div className="text-center">
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-pink-500">
+                      Buy Safe. Sell Easy.
+                    </span>
+                  </h1>
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold">
+                    The honest ticket marketplace.
+                  </h3>
                 </div>
+               
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </header>
+
       {wallet && balance && (
         <div className=" px-4 py-5 sm:px-6">
           <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
